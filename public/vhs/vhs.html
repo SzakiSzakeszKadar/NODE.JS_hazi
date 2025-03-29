@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHS Kazetták</title>
+  <style>
+    /* Alap stílusok */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Táblázat stílusok */
+    table {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Művelet gombok */
+    .action-buttons a {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-buttons a.megtekintes {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .action-buttons a.szerkesztes {
+      background-color: #f1c40f;
+      color: white;
+    }
+
+    .action-buttons a.torles {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .action-buttons a:hover {
+      opacity: 0.9;
+    }
+
+    /* Új VHS gomb */
+    .new-vhs-button {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #2ecc71;
+      color: white;
+      border-radius: 4px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .new-vhs-button:hover {
+      background-color: #27ae60;
+    }
+
+    /* Vissza gomb */
+    .back-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #95a5a6;
+      color: white;
+      border-radius: 4px;
+      text-align: center;
+      width: fit-content;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+<h1>VHS Kazetták</h1>
+<a href="/vhs/vhsaddingform.html" class="new-vhs-button">Új VHS felvétele</a>
+<table>
+  <thead>
+  <tr>
+    <th>Cím</th>
+    <th>Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Terminator</td>
+    <td class="action-buttons">
+      <a href="/vhs/vhsdetailedview.html" class="megtekintes">Megtekintés</a>
+      <a href="/vhs/vhseditform.html" class="szerkesztes">Szerkesztés</a>
+      <a href="/vhs/vhs.html" class="torles">Törlés</a>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+<a href="/index.html" class="back-button">Vissza</a>
+</body>
+</html>

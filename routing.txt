@@ -1,0 +1,67 @@
+loadVhsMW :     egy vhs betoltese az adatbazisbol, vhs db-bol ki ha nem letezik redirect /vhs-re, egyebkent next hivas
+deleteVhsMW :   torlok egy VHS-t az adatbazisbol es atiranyitja a usert a /vhs -re
+saveVhsMW :     elmenti a vhs-t az adatbazisba
+loadAllVhsMW:   betolti az osszes Vhs-t az adatbazisbol
+
+loadCustomerMW :    egy felhasznalo betoltese az adatbazisbol, customer db-bol ki ha nem letezik redirect /vhs-re, egyebkent next hivas
+deleteCustomerMW :  torlok egy customert-t az adatbazisbol es atiranyitja a usert a /customer -re
+saveCustomerMW :    elmenti a customer-t
+loadAllCustomersMW: betolti az osszes customer-t az adatbazisbol
+
+loadAllRentalsMW:   betolti az osszes kolcsonzest az adatbazisbol
+loadRentalMW:       betolt 1 kolcsonzest az adatbazisbol
+deleteRentalMW:     kitorol egy kolcsonzest
+saveRentalMW:       elmenti a kolcsonzest
+
+renderMW: HTML-t ad ki
+
+
+Method
+GET     /                            3 gomb ami kulonbozo feluletekre visz
+        renderMW(index.html)
+
+
+GET     /vhs                         vhs lista
+        loadAllVhsMW
+GET     /vhs/detailedview/:id        egy vhs reszletes nezete
+        loadVhsMW
+GET     /vhs/edit/:id                egy vhs szerkesztese
+        loadVhsMW
+        renderMW(vhseditform.html + db-bol vhs)
+POST    /vhs/edit/:id                egy vhs szerkesztesenek ertelmezese
+        saveVhsMW
+GET     /vhs/delete/:id              egy vhs torlese (nem kulon oldal)
+        loadVhsMW
+        deleteVhsMW
+GET     /vhs/addnew/:id              uj vhs felvetele
+        renderMW(vhsaddingform.html + ures mezok)
+POST    /vhs/addnew/:id              uj vhs felvetelenek bekuldese
+        saveVhsMW
+
+
+GET     /customer                    ugyfelek tablazata, CRUD gombok
+        loadAllCustomersMW
+GET     /customer/detailedview/:id   egy film reszletes nezete
+        loadCustomerMW
+GET     /customer/edit/:id
+        renderMW(editingrental.html)
+POST    /customer/edit/:id
+        saveCustomerMW
+GET     /customer/delete/:id         egy ugyfel torlese (nem kulon oldal)
+        loadCustomerMW
+        deleteCustomerMW
+GET     /customer/addnew             uj felhasznalo felvetele
+        renderMW(addingcustomer.html)
+POST    /customer/addnew
+        saveCustomerMW
+
+
+GET     /rental                      kolcsonzések megtekintése
+       loadAllRentalsMW
+GET     /rental/addnew               kolcsonzés rögzitése.
+       renderMW(addingrental.html)
+POST    /rental/addnew
+       saveRentalMW
+GET     /rental/delete/:id            kolcsonzes befejezese (nem kulon oldal)
+        loadRentalMW
+        deleteRentalMW
