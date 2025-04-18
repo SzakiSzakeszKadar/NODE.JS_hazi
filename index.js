@@ -1,28 +1,30 @@
-const express = require('express')
+const express = require('express');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
 const app = express();
 
-const loadVhsMW = require('./middlewares/loadVhs');
-const loadAllVhsMW = require('./middlewares/loadAllVhs');
-const deleteVhsMW = require('./middlewares/deleteVhs');
-const saveVhsMW = require('./middlewares/saveVhs');
+// UTF-8 beállítások
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ charset: 'utf-8' }));
+app.set('view engine', 'ejs');
 
-const loadCustomerMW = require('./middlewares/loadCustomer');
-const loadAllCustomerMW = require('./middlewares/loadAllCustomers');
-const deleteCustomerMW = require('./middlewares/deleteCustomer');
-const saveCustomerMW = require('./middlewares/saveCustomer');
+// Adatbázis kapcsolat
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/OCAYIY')
+    .then(() => console.log('MongoDB kapcsolat létrejött'))
+    .catch(err => console.error('MongoDB kapcsolódási hiba:', err));
 
+// Modell betöltése
+require('./models/Customer');
+require('./models/Vhs');
+require('./models/Rental');
 
-const loadRentalMW = require('./middlewares/loadRental');
-const loadAllRentalsMW = require('./middlewares/loadAllRentals');
-const deleteRentalMW = require('./middlewares/deleteRental');
-const saveRentalMW = require('./middlewares/saveRental');
-
-const renderMW = require('./middlewares/render');
-
-const subscribeToRoutes = require('./routing/routing');
+// Útvonalak beállítása
+const subscribeToRoutes = require('./routing/routing.js');
 subscribeToRoutes(app);
 
-app.use (express.static('public'));
-app.listen(3000, ()  => {
-    console.log("Listening on :3000");
+// Szerver indítása
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Szerver fut a következõ porton: ${port}`);
 });

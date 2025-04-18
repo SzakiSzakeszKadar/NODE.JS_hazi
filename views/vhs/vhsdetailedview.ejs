@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHS Kazetta R�szletes Adatai</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .details {
+      margin-bottom: 20px;
+    }
+    .detail-row {
+      display: flex;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .detail-label {
+      width: 150px;
+      font-weight: bold;
+      color: #666;
+    }
+    .detail-value {
+      flex: 1;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 30px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .edit {
+      background-color: #2196F3;
+    }
+    .edit:hover {
+      background-color: #0b7dda;
+    }
+    .delete {
+      background-color: #f44336;
+    }
+    .delete:hover {
+      background-color: #da190b;
+    }
+    .back {
+      background-color: #9e9e9e;
+    }
+    .back:hover {
+      background-color: #757575;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>VHS Kazetta Részletes Adatai</h1>
+    <div class="details">
+      <div class="detail-row">
+        <div class="detail-label">Cím:</div>
+        <div class="detail-value"><%= vhs.title %></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Rendező:</div>
+        <div class="detail-value"><%= vhs.director %></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Kiadás éve:</div>
+        <div class="detail-value"><%= vhs.releaseYear %></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Műfaj:</div>
+        <div class="detail-value"><%= vhs.genre %></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Elérhető:</div>
+        <div class="detail-value"><%= vhs.available ? 'Igen' : 'Nem' %></div>
+      </div>
+    </div>
+    <div class="button-group">
+      <button class="edit" onclick="window.location.href='/vhs/edit/<%= vhs.id %>'">Szerkesztés</button>
+      <button class="delete" onclick="if(confirm('Biztosan t�r�lni szeretn�d ezt a VHS kazett�t?')) window.location.href='/vhs/delete/<%= vhs.id %>'">Törlés</button>
+      <button class="back" onclick="window.location.href='/vhs'">Vissza</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ügyfél Részletek</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .customer-details {
+      margin-bottom: 20px;
+    }
+    .detail-group {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+    }
+    .detail-label {
+      font-weight: bold;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    .detail-value {
+      color: #333;
+      font-size: 16px;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .button {
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .edit {
+      background-color: #4CAF50;
+    }
+    .edit:hover {
+      background-color: #45a049;
+    }
+    .back {
+      background-color: #666;
+    }
+    .back:hover {
+      background-color: #555;
+    }
+    .delete {
+      background-color: #f44336;
+    }
+    .delete:hover {
+      background-color: #da190b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ügyfél Részletek</h1>
+    <div class="customer-details">
+      <div class="detail-group">
+        <div class="detail-label">Név:</div>
+        <div class="detail-value"><%= customer.name %></div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Email:</div>
+        <div class="detail-value"><%= customer.email %></div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Telefonszám:</div>
+        <div class="detail-value"><%= customer.phone %></div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Cím:</div>
+        <div class="detail-value"><%= customer.address %></div>
+      </div>
+    </div>
+    <div class="button-group">
+      <a href="/customer/edit/<%= customer._id %>" class="button edit">Szerkesztés</a>
+      <a href="/customer/delete/<%= customer._id %>" class="button delete" onclick="return confirm('Biztosan törölni szeretné ezt az ügyfelet?')">Törlés</a>
+      <a href="/customer" class="button back">Vissza</a>
+    </div>
+  </div>
+</body>
+</html>

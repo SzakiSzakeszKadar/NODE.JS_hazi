@@ -1,0 +1,2 @@
+* text=auto eol=lf
+*.{js,ejs,json,html,css} text eol=lf charset=utf-8 

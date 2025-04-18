@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VHS Kazetták</title>
+    <style>
+        /* Alap stílusok */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Táblázat konténer */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Táblázat stílusok */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Művelet gombok */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .view {
+            background-color: #2196F3;
+        }
+
+        .edit {
+            background-color: #4CAF50;
+        }
+
+        .delete {
+            background-color: #f44336;
+        }
+
+        .view:hover {
+            background-color: #0b7dda;
+        }
+
+        .edit:hover {
+            background-color: #45a049;
+        }
+
+        .delete:hover {
+            background-color: #da190b;
+        }
+
+        /* Új VHS gomb */
+        .add-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .add-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Vissza gomb */
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #95a5a6;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            width: fit-content;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Responsive stílusok */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0 -20px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>VHS Kazetták</h1>
+    <a href="/vhs/addnew" class="add-button">Új VHS hozzáadása</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Cím</th>
+            <th>Rendező</th>
+            <th>Kiadás éve</th>
+            <th>Műfaj</th>
+            <th>Elérhető</th>
+            <th>Műveletek</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% vhsList.forEach(function(vhs) { %>
+            <tr>
+                <td><%= vhs.title %></td>
+                <td><%= vhs.director %></td>
+                <td><%= vhs.releaseYear %></td>
+                <td><%= vhs.genre %></td>
+                <td><%= vhs.available ? 'Igen' : 'Nem' %></td>
+                <td class="action-buttons">
+                    <a href="/vhs/detailedview/<%= vhs._id %>" class="view">Megtekintés</a>
+                    <a href="/vhs/edit/<%= vhs._id %>" class="edit">Szerkesztés</a>
+                    <a href="/vhs/delete/<%= vhs._id %>" class="delete" onclick="return confirm('Biztosan törölni szeretnéd ezt a VHS kazettát?')">Törlés</a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+<a href="/" class="back-button">Vissza a főoldalra</a>
+</body>
+</html>

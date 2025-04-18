@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHS Kazetta Szerkesztése</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .cancel {
+      background-color: #f44336;
+    }
+    .cancel:hover {
+      background-color: #da190b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>VHS Kazetta Szerkesztése</h1>
+    <form action="/vhs/edit/<%= vhs._id %>" method="POST">
+      <div class="form-group">
+        <label for="title">Cím:</label>
+        <input type="text" id="title" name="title" value="<%= vhs.title %>" required>
+      </div>
+      <div class="form-group">
+        <label for="director">Rendező:</label>
+        <input type="text" id="director" name="director" value="<%= vhs.director %>" required>
+      </div>
+      <div class="form-group">
+        <label for="releaseYear">Kiadás éve:</label>
+        <input type="number" id="releaseYear" name="releaseYear" value="<%= vhs.releaseYear %>" min="1900" max="2100" required>
+      </div>
+      <div class="form-group">
+        <label for="genre">M�faj:</label>
+        <select id="genre" name="genre" required>
+          <option value="">V�lassz m�fajt</option>
+          <option value="Akci�" <%= vhs.genre === 'Akci�' ? 'selected' : '' %>>Akció</option>
+          <option value="Kaland" <%= vhs.genre === 'Kaland' ? 'selected' : '' %>>Kaland</option>
+          <option value="Anim�ci�" <%= vhs.genre === 'Anim�ci�' ? 'selected' : '' %>>Animáció</option>
+          <option value="Kom�dia" <%= vhs.genre === 'Kom�dia' ? 'selected' : '' %>>Komédia</option>
+          <option value="Dr�ma" <%= vhs.genre === 'Dr�ma' ? 'selected' : '' %>>Dráma</option>
+          <option value="Fantasy" <%= vhs.genre === 'Fantasy' ? 'selected' : '' %>>Fantasy</option>
+          <option value="Horror" <%= vhs.genre === 'Horror' ? 'selected' : '' %>>Horror</option>
+          <option value="Misztikus" <%= vhs.genre === 'Misztikus' ? 'selected' : '' %>>Misztikus</option>
+          <option value="Romantikus" <%= vhs.genre === 'Romantikus' ? 'selected' : '' %>>Romantikus</option>
+          <option value="Sci-Fi" <%= vhs.genre === 'Sci-Fi' ? 'selected' : '' %>>Sci-Fi</option>
+          <option value="Thriller" <%= vhs.genre === 'Thriller' ? 'selected' : '' %>>Thriller</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="available">Elérhető:</label>
+        <select id="available" name="available" required>
+          <option value="true" <%= vhs.available ? 'selected' : '' %>>Igen</option>
+          <option value="false" <%= !vhs.available ? 'selected' : '' %>>Nem</option>
+        </select>
+      </div>
+      <div class="button-group">
+        <button type="submit">Ment�s</button>
+        <button type="button" class="cancel" onclick="window.location.href='/vhs'">Mégse</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
