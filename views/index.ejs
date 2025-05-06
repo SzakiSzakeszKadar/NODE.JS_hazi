@@ -4,77 +4,76 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VHS kÃ¶lcsÃ¶nzÃ©s adminisztrÃ¡ciÃ³</title>
+    <title>VHS kölcsönzés adminisztráció</title>
+    <style>
+        /* Közös stílusok */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Fõoldal specifikus stílusok */
+        .welcome-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .welcome-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .welcome-container ul li {
+            margin: 15px 0;
+        }
+
+        .welcome-container ul li a {
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .welcome-container ul li a:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
-<style>
-    /* Kï¿½zï¿½s stï¿½lusok */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
-        margin: 0;
-        padding: 20px;
-    }
-
-    h1 {
-        color: #2c3e50;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    a {
-        color: #3498db;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Fï¿½oldal specifikus stï¿½lusok */
-    .welcome-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .welcome-container ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .welcome-container ul li {
-        margin: 15px 0;
-    }
-
-    .welcome-container ul li a {
-        display: block;
-        width: 80%;
-        margin: 0 auto;
-        padding: 10px 20px;
-        background-color: #3498db;
-        color: white;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-    }
-
-    .welcome-container ul li a:hover {
-        background-color: #2980b9;
-    }
-</style>
 <body>
-<div class="welcome-container">
-    <h1>VHS kÃ¶lcsÃ¶nzÅ‘ rendszer adminisztrÃ¡ciÃ³s felÃ¼let</h1>
-    <ul>
-        <li><a href="/vhs">VHS kazettÃ¡k</a></li>
-        <li><a href="/customer">Ãœgyfelek</a></li>
-        <li><a href="/rental">KÃ¶lcsÃ¶nzÃ©sek</a></li>
-    </ul>
-</div>
+    <div class="welcome-container">
+        <h1>VHS kölcsönzõ rendszer adminisztrációs felület</h1>
+        <ul>
+            <li><a href="/vhs">VHS kazetták</a></li>
+            <li><a href="/customer">Ügyfelek</a></li>
+            <li><a href="/rental">Kölcsönzések</a></li>
+        </ul>
+    </div>
 </body>
-
 </html>

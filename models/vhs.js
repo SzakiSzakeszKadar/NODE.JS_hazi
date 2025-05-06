@@ -3,24 +3,19 @@ const mongoose = require('mongoose');
 const vhsSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     director: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     releaseYear: {
         type: Number,
-        required: true,
-        min: 1900,
-        max: new Date().getFullYear()
+        required: true
     },
     genre: {
         type: String,
-        required: true,
-        enum: ['Akció', 'Kaland', 'Animáció', 'Komédia', 'Dráma', 'Fantasy', 'Horror', 'Misztikus', 'Romantikus', 'Sci-Fi', 'Thriller']
+        required: true
     },
     available: {
         type: Boolean,
@@ -30,4 +25,5 @@ const vhsSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Vhs', vhsSchema);
+// Ellenõrizzük, hogy a modell már létezik-e
+module.exports = mongoose.models.Vhs || mongoose.model('Vhs', vhsSchema);

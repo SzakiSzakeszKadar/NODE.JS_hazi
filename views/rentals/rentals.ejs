@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KÃ¶lcsÃ¶nzÃ©sek</title>
+    <title>Kölcsönzések</title>
     <style>
-        /* KÃ¶zÃ¶s stÃ­lusok */
+        /* Közös stílusok */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
             color: #333;
             margin: 0;
             padding: 20px;
-        }
-
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 20px;
         }
 
         a {
@@ -29,7 +23,7 @@
             text-decoration: underline;
         }
 
-        /* KÃ¶lcsÃ¶nzÃ©sek kontÃ©ner */
+        /* Kölcsönzések konténer */
         .loan-container {
             max-width: 800px;
             margin: 0 auto;
@@ -63,17 +57,22 @@
             font-weight: bold;
         }
 
-        .loan-item .status.active {
+        .loan-item .status.aktív {
             background-color: #2ecc71;
             color: white;
         }
 
-        .loan-item .status.returned {
+        .loan-item .status.visszahozott {
             background-color: #95a5a6;
             color: white;
         }
 
-        /* Ãšj kÃ¶lcsÃ¶nzÃ©s gomb */
+        .loan-item .status.lejárt {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Új kölcsönzés gomb */
         .new-loan-button {
             display: inline-block;
             margin: 20px auto;
@@ -89,7 +88,7 @@
             background-color: #27ae60;
         }
 
-        /* VisszavÃ©tel gomb */
+        /* Visszavétel gomb */
         .return-button {
             display: inline-block;
             margin: 5px 0;
@@ -121,27 +120,68 @@
         .back-button:hover {
             background-color: #7f8c8d;
         }
+
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .megtekintes {
+            background-color: #3498db;
+        }
+
+        .megtekintes:hover {
+            background-color: #2980b9;
+        }
+
+        .szerkesztes {
+            background-color: #f1c40f;
+        }
+
+        .szerkesztes:hover {
+            background-color: #f39c12;
+        }
+
+        .torles {
+            background-color: #e74c3c;
+        }
+
+        .torles:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
-<h1>KÃ¶lcsÃ¶nzÃ©sek</h1>
-<a href="/rental/addnew/1" class="new-loan-button">Ãšj kÃ¶lcsÃ¶nzÃ©s felvÃ©tele</a>
+<h1>Kölcsönzések</h1>
+<a href="/rental/addnew" class="new-loan-button">Új kölcsönzés felvétele</a>
 <div class="loan-container">
     <% rentalList.forEach(function(rental) { %>
     <div class="loan-item">
-        <p><strong>ÃœgyfÃ©l neve:</strong> <%= rental.customerName %></p>
-        <p><strong>Film cÃ­me:</strong> <%= rental.vhsTitle %></p>
-        <p><strong>KÃ¶lcsÃ¶nzÃ©s dÃ¡tuma:</strong> <%= rental.rentalDate %></p>
-        <p><strong>VisszahozÃ¡s hatÃ¡rideje:</strong> <%= rental.returnDate %></p>
+        <p><strong>Ügyfél neve:</strong> <%= rental.customerName %></p>
+        <p><strong>Film címe:</strong> <%= rental.vhsTitle %></p>
+        <p><strong>Kölcsönzés dátuma:</strong> <%= new Date(rental.rentalDate).toLocaleDateString('hu-HU') %></p>
+        <p><strong>Visszahozás határideje:</strong> <%= new Date(rental.returnDate).toLocaleDateString('hu-HU') %></p>
         <p>
-            <strong>StÃ¡tusz:</strong> 
-            <span class="status <%= rental.status === 'AktÃ­v' ? 'active' : 'returned' %>">
-                <%= rental.status %>
+            <strong>Státusz:</strong> 
+            <span class="status <%= rental.status %>">
+                <%= rental.status.charAt(0).toUpperCase() + rental.status.slice(1) %>
             </span>
         </p>
-        <% if (rental.status === 'AktÃ­v') { %>
-            <a href="/rental/delete/<%= rental.id %>" class="return-button">VisszavÃ©tel</a>
-        <% } %>
+        <div class="action-buttons">
+            <a href="/rental/detailedview/<%= rental._id %>" class="megtekintes">Megtekintés</a>
+            <% if (rental.status === 'aktív') { %>
+                <a href="/rental/edit/<%= rental._id %>" class="szerkesztes">Szerkesztés</a>
+                <a href="/rental/delete/<%= rental._id %>" class="torles" onclick="return confirm('Biztosan törölni szeretnéd a kölcsönzést?')">Törlés</a>
+            <% } %>
+        </div>
     </div>
     <% }); %>
 </div>

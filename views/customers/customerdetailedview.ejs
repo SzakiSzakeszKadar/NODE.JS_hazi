@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ügyfél Részletek</title>
+  <title>Ügyfél Részletes Adatai</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,13 +26,13 @@
       margin-bottom: 30px;
     }
     .customer-details {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .detail-group {
-      margin-bottom: 15px;
-      padding: 10px;
-      background-color: #f9f9f9;
-      border-radius: 4px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
     }
     .detail-label {
       font-weight: bold;
@@ -41,45 +41,65 @@
     }
     .detail-value {
       color: #333;
-      font-size: 16px;
+      font-size: 1.1em;
+    }
+    .status, .membership {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .active {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .inactive {
+      background-color: #f44336;
+      color: white;
+    }
+    .Bronze {
+      background-color: #cd7f32;
+      color: white;
+    }
+    .Silver {
+      background-color: #c0c0c0;
+      color: white;
+    }
+    .Gold {
+      background-color: #ffd700;
+      color: black;
     }
     .button-group {
-      text-align: center;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
       margin-top: 20px;
     }
     .button {
       padding: 10px 20px;
-      color: white;
-      border: none;
       border-radius: 4px;
-      cursor: pointer;
-      margin: 0 5px;
       text-decoration: none;
-      display: inline-block;
+      color: white;
+      font-weight: bold;
+      text-align: center;
     }
     .edit {
       background-color: #4CAF50;
     }
-    .edit:hover {
-      background-color: #45a049;
-    }
-    .back {
-      background-color: #666;
-    }
-    .back:hover {
-      background-color: #555;
-    }
     .delete {
       background-color: #f44336;
     }
-    .delete:hover {
-      background-color: #da190b;
+    .back {
+      background-color: #95a5a6;
+    }
+    .button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Ügyfél Részletek</h1>
+    <h1>Ügyfél Részletes Adatai</h1>
     <div class="customer-details">
       <div class="detail-group">
         <div class="detail-label">Név:</div>
@@ -97,10 +117,36 @@
         <div class="detail-label">Cím:</div>
         <div class="detail-value"><%= customer.address %></div>
       </div>
+      <div class="detail-group">
+        <div class="detail-label">Tagság típusa:</div>
+        <div class="detail-value">
+          <span class="membership <%= customer.membershipType %>">
+            <%= customer.membershipType %>
+          </span>
+        </div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Csatlakozás dátuma:</div>
+        <div class="detail-value">
+          <%= customer.joinDate.toLocaleDateString('hu-HU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }) %>
+        </div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Státusz:</div>
+        <div class="detail-value">
+          <span class="status <%= customer.active ? 'active' : 'inactive' %>">
+            <%= customer.active ? 'Aktív' : 'Inaktív' %>
+          </span>
+        </div>
+      </div>
     </div>
     <div class="button-group">
       <a href="/customer/edit/<%= customer._id %>" class="button edit">Szerkesztés</a>
-      <a href="/customer/delete/<%= customer._id %>" class="button delete" onclick="return confirm('Biztosan törölni szeretné ezt az ügyfelet?')">Törlés</a>
+      <a href="/customer/delete/<%= customer._id %>" class="button delete" onclick="return confirm('Biztosan törölni szeretnéd ezt az ügyfelet?')">Törlés</a>
       <a href="/customer" class="button back">Vissza</a>
     </div>
   </div>

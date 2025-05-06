@@ -1,24 +1,24 @@
-const Vhs = require('../models/Vhs');
+const Vhs = require('../models/vhs');
 
 /**
-  * egy vhs betoltese az adatbazisbol, vhs db-bol ki ha nem letezik redirect /vhs-re, egyebkent next hivas
-  * @param objRepo
-  * @returns {function(*,*,*): *}
-*/
-module.exports = (objRepo) => {
-    return async (req, res, next) => {
-        try {
-            const vhs = await Vhs.findById(req.params.id);
-            
-            if (!vhs) {
-                return res.redirect('/vhs');
-            }
-            
-            res.locals.vhs = vhs;
-            return next();
-        } catch (err) {
-            console.error('Hiba a VHS betöltésekor:', err);
+ * Betölti a VHS-t az adatbázisból
+ * @returns {function(*,*,*): *}
+ */
+module.exports = async function (req, res, next) {
+    try {
+        console.log('VHS betöltése kezdõdik, ID:', req.params.id);
+        const vhs = await Vhs.findById(req.params.id);
+        
+        if (!vhs) {
+            console.error('VHS nem található:', req.params.id);
             return res.redirect('/vhs');
         }
+
+        console.log('VHS sikeresen betöltve:', vhs._id);
+        res.locals.vhs = vhs;
+        return next();
+    } catch (error) {
+        console.error('Hiba a VHS betöltése közben:', error);
+        return next(error);
     }
-}
+};

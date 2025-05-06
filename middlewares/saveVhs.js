@@ -1,51 +1,67 @@
-const Vhs = require('../models/Vhs');
+const Vhs = require('../models/vhs');
 
 /**
  * elmenti a vhs-t az adatbazisba
- * @param objRepo
  * @returns {function(*,*,*): *}
  */
-module.exports = function (objRepo) {
-    return async function (req, res, next) {
-        try {
-            const { title, director, releaseYear, genre, available } = req.body;
+module.exports = async function (req, res, next) {
+    try {
+        console.log('VHS mentése kezdõdik:', req.body);
+        const { title, director, releaseYear, genre, available } = req.body;
 
-            // Validációk
-            if (!title || !director || !releaseYear || !genre) {
-                return next(new Error('Minden mezõ kitöltése kötelezõ!'));
-            }
+        if (!title || !director || !releaseYear || !genre) {
+            console.error('Hiányzó kötelezõ mezõk');
+            return next(new Error('Minden mezõ kitöltése kötelezõ!'));
+        }
 
-            if (releaseYear < 1900 || releaseYear > new Date().getFullYear()) {
-                return next(new Error('Érvénytelen kiadási év!'));
-            }
+        // Évszám validáció
+        const year = parseInt(releaseYear);
+        if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+            console.error('Érvénytelen évszám:', releaseYear);
+            return next(new Error('Érvénytelen évszám!'));
+        }
 
-            // Ha van vhs a res.locals-ban, akkor szerkesztés
-            if (res.locals.vhs) {
-                // A meglévõ VHS frissítése
-                const vhs = res.locals.vhs;
-                vhs.title = title;
-                vhs.director = director;
-                vhs.releaseYear = parseInt(releaseYear);
-                vhs.genre = genre;
-                vhs.available = available === 'true';
-                await vhs.save();
-            } else {
-                // Új VHS létrehozása
-                const vhs = new Vhs({
+        // Available mezõ konvertálása boolean-né
+        const isAvailable = available === 'true';
+
+        if (req.params.id) {
+            // Módosítás - findByIdAndUpdate használata
+            console.log('VHS módosítása:', req.params.id);
+            const updatedVhs = await Vhs.findByIdAndUpdate(
+                req.params.id,
+                {
                     title,
                     director,
-                    releaseYear: parseInt(releaseYear),
+                    releaseYear: year,
                     genre,
-                    available: available === 'true'
-                });
-                await vhs.save();
+                    available: isAvailable
+                },
+                { new: true }
+            );
+
+            if (!updatedVhs) {
+                console.error('VHS nem található:', req.params.id);
+                return next(new Error('A VHS kazetta nem található!'));
             }
-            
-            // Átirányítás a VHS listára
-            return res.redirect('/vhs');
-        } catch (err) {
-            console.error('Hiba a VHS mentésekor:', err);
-            return next(err);
+
+            console.log('VHS sikeresen módosítva:', updatedVhs._id);
+        } else {
+            // Új VHS
+            console.log('Új VHS létrehozása');
+            const vhs = new Vhs({
+                title,
+                director,
+                releaseYear: year,
+                genre,
+                available: isAvailable
+            });
+            await vhs.save();
+            console.log('Új VHS sikeresen létrehozva:', vhs._id);
         }
-    };
+
+        return res.redirect('/vhs');
+    } catch (error) {
+        console.error('Hiba a VHS kazetta mentése közben:', error);
+        return next(error);
+    }
 };

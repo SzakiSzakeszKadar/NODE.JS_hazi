@@ -1,42 +1,18 @@
+const Customer = require('../models/customer');
+
 /**
  * Az összes ügyfél betöltése az adatbázisból
- * @param objRepo
  * @returns {function(*,*,*): *}
  */
-module.exports = (objRepo) => {
-    return (req, res, next) => {
-        // Példa ügyfél lista
-        const customerList = [
-            {
-                id: 1,
-                name: "Kovács János",
-                email: "kovacs.janos@example.com",
-                phone: "+36 30 123 4567",
-                address: "Budapest, Fõ utca 1.",
-                membershipType: "Gold",
-                joinDate: "2023-01-15"
-            },
-            {
-                id: 2,
-                name: "Nagy Éva",
-                email: "nagy.eva@example.com",
-                phone: "+36 20 987 6543",
-                address: "Debrecen, Petõfi utca 42.",
-                membershipType: "Silver",
-                joinDate: "2023-03-20"
-            },
-            {
-                id: 3,
-                name: "Szabó Péter",
-                email: "szabo.peter@example.com",
-                phone: "+36 70 555 1234",
-                address: "Szeged, Kossuth tér 5.",
-                membershipType: "Bronze",
-                joinDate: "2023-05-10"
-            }
-        ];
-        
+module.exports = async function (req, res, next) {
+    console.log('Loading all customers...');
+    try {
+        const customerList = await Customer.find().sort({ name: 1 });
+        console.log('Found customers:', customerList.length);
         res.locals.customerList = customerList;
         return next();
+    } catch (err) {
+        console.error('Hiba az ügyfelek betöltésekor:', err);
+        return next(err);
     }
-}
+};

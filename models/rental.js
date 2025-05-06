@@ -1,28 +1,26 @@
 const mongoose = require('mongoose');
 
 const rentalSchema = new mongoose.Schema({
-    customerName: {
-        type: String,
-        required: [true, 'Az ügyfél nevének megadása kötelezõ'],
-        trim: true
+    customerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+        required: true
     },
-    vhsTitle: {
-        type: String,
-        required: [true, 'A VHS címének megadása kötelezõ'],
-        trim: true
+    vhsId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Vhs',
+        required: true
     },
     rentalDate: {
         type: Date,
-        required: [true, 'A kölcsönzés dátumának megadása kötelezõ'],
         default: Date.now
     },
     returnDate: {
         type: Date,
-        required: [true, 'A visszahozatal dátumának megadása kötelezõ']
+        required: true
     },
     status: {
         type: String,
-        required: [true, 'Az állapot megadása kötelezõ'],
         enum: ['aktív', 'visszahozott', 'lejárt'],
         default: 'aktív'
     }
@@ -30,4 +28,5 @@ const rentalSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Rental', rentalSchema);
+// Ellenõrizzük, hogy a modell már létezik-e
+module.exports = mongoose.models.Rental || mongoose.model('Rental', rentalSchema);

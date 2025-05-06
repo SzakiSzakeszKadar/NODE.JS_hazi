@@ -1,39 +1,31 @@
+const Rental = require('../models/rental');
+
 /**
- * Az Ã¶sszes bÃ©rlÃ©s betÃ¶ltÃ©se az adatbÃ¡zisbÃ³l
+ * Az összes bérlés betöltése az adatbázisból
  * @param objRepo
  * @returns {function(*,*,*): *}
  */
-module.exports = (objRepo) => {
-    return (req, res, next) => {
-        // PÃ¡lda bÃ©rlÃ©s lista
-        const rentalList = [
-            {
-                id: 1,
-                customerName: "KovÃ¡cs JÃ¡nos",
-                vhsTitle: "Star Wars: A New Hope",
-                rentalDate: "2024-03-15",
-                returnDate: "2024-03-22",
-                status: "AktÃ­v"
-            },
-            {
-                id: 2,
-                customerName: "Nagy Ã‰va",
-                vhsTitle: "The Godfather",
-                rentalDate: "2024-03-10",
-                returnDate: "2024-03-17",
-                status: "Visszahozva"
-            },
-            {
-                id: 3,
-                customerName: "SzabÃ³ PÃ©ter",
-                vhsTitle: "Pulp Fiction",
-                rentalDate: "2024-03-20",
-                returnDate: "2024-03-27",
-                status: "AktÃ­v"
-            }
-        ];
+async function loadAllRentals(req, res, next) {
+    try {
+        const rentalList = await Rental.find({})
+            .populate('customerId', 'name')
+            .populate('vhsId', 'title')
+            .sort({ rentalDate: -1 });
 
-        res.locals.rentalList = rentalList;
-        return next();
+        res.locals.rentalList = rentalList.map(rental => ({
+            _id: rental._id,
+            customerName: rental.customerId.name,
+            vhsTitle: rental.vhsId.title,
+            rentalDate: rental.rentalDate,
+            returnDate: rental.returnDate,
+            status: rental.status
+        }));
+
+        next();
+    } catch (error) {
+        console.error('Hiba a kölcsönzések betöltése közben:', error);
+        next(error);
     }
 }
+
+module.exports = loadAllRentals;

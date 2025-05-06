@@ -1,46 +1,36 @@
+const Rental = require('../models/rental');
+
 /**
  * Egy bérlés betöltése az adatbázisból
  * @param objRepo
  * @returns {function(*,*,*): *}
  */
-module.exports = (objRepo) => {
-    return (req, res, next) => {
-        // Példa bérlés lista
-        const rentalList = [
-            {
-                id: 1,
-                customerName: "Kovács János",
-                vhsTitle: "Star Wars: A New Hope",
-                rentalDate: "2024-03-15",
-                returnDate: "2024-03-22",
-                status: "Aktív"
-            },
-            {
-                id: 2,
-                customerName: "Nagy Éva",
-                vhsTitle: "The Godfather",
-                rentalDate: "2024-03-10",
-                returnDate: "2024-03-17",
-                status: "Visszahozva"
-            },
-            {
-                id: 3,
-                customerName: "Szabó Péter",
-                vhsTitle: "Pulp Fiction",
-                rentalDate: "2024-03-20",
-                returnDate: "2024-03-27",
-                status: "Aktív"
-            }
-        ];
+async function loadRental(req, res, next) {
+    try {
+        const rental = await Rental.findById(req.params.id)
+            .populate('customerId', 'name')
+            .populate('vhsId', 'title');
 
-        // Megkeressük a kért bérlést az ID alapján
-        const rental = rentalList.find(r => r.id === parseInt(req.params.id));
-        
         if (!rental) {
             return res.redirect('/rental');
         }
-        
-        res.locals.rental = rental;
-        return next();
+
+        res.locals.rental = {
+            _id: rental._id,
+            customerId: rental.customerId._id,
+            customerName: rental.customerId.name,
+            vhsId: rental.vhsId._id,
+            vhsTitle: rental.vhsId.title,
+            rentalDate: rental.rentalDate,
+            returnDate: rental.returnDate,
+            status: rental.status
+        };
+
+        next();
+    } catch (error) {
+        console.error('Hiba a kölcsönzés betöltése közben:', error);
+        next(error);
     }
 }
+
+module.exports = loadRental;

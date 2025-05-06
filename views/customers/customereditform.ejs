@@ -35,7 +35,9 @@
         }
         input[type="text"],
         input[type="email"],
-        input[type="tel"] {
+        input[type="tel"],
+        input[type="date"],
+        select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -68,8 +70,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>�gyf�l Szerkeszt�se</h1>
-        <form action="/customer/edit/<%= customer._id %>" method="POST">
+        <h1>Ügyfél Szerkesztése</h1>
+        <form action="/customer/save/<%= customer._id %>" method="POST">
             <div class="form-group">
                 <label for="name">Név:</label>
                 <input type="text" id="name" name="name" value="<%= customer.name %>" required>
@@ -86,6 +88,25 @@
                 <label for="address">Cím:</label>
                 <input type="text" id="address" name="address" value="<%= customer.address %>" required>
             </div>
+            <div class="form-group">
+                <label for="membershipType">Tagság típusa:</label>
+                <select id="membershipType" name="membershipType" required>
+                    <option value="Bronze" <%= customer.membershipType === 'Bronze' ? 'selected' : '' %>>Bronze</option>
+                    <option value="Silver" <%= customer.membershipType === 'Silver' ? 'selected' : '' %>>Silver</option>
+                    <option value="Gold" <%= customer.membershipType === 'Gold' ? 'selected' : '' %>>Gold</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="joinDate">Csatlakozás dátuma:</label>
+                <input type="date" id="joinDate" name="joinDate" value="<%= customer.joinDate.toISOString().split('T')[0] %>" required>
+            </div>
+            <div class="form-group">
+                <label for="active">Aktív:</label>
+                <select id="active" name="active" required>
+                    <option value="true" <%= customer.active ? 'selected' : '' %>>Igen</option>
+                    <option value="false" <%= !customer.active ? 'selected' : '' %>>Nem</option>
+                </select>
+            </div>
             <div class="button-group">
                 <button type="submit">Mentés</button>
                 <button type="button" class="cancel" onclick="window.location.href='/customer'">Mégse</button>
@@ -93,4 +114,4 @@
         </form>
     </div>
 </body>
-</html>
+</html> 

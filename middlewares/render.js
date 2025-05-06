@@ -1,10 +1,14 @@
 /**
  * kirenderel egy html-t
- * @param objRepo
+ * @param viewName A megjelenítendõ view neve
  * @returns {function(*,*,*): *}
  */
-module.exports = (objRepo, view) => {
-    return (req, res, next)=> {
-        res.render(view, res.locals);
-    }
+function render(viewName) {
+    return function(req, res) {
+        console.log('Rendering view:', viewName);
+        console.log('Data:', res.locals);
+        res.render(viewName, res.locals);
+    };
 }
+
+module.exports = render;

@@ -1,19 +1,33 @@
-const Customer = require('../models/Customer');
+const Customer = require('../models/customer');
+const Rental = require('../models/rental');
 
 /**
  * töröl egy ügyfelet az adatbázisból és átirányítja a felhasználót a /customer -re
- * @param objRepo
- * @returns {function(*,*,*): *}
  */
-module.exports = function (objRepo) {
-    return async function (req, res, next) {
-        try {
-            const customer = res.locals.customer;
-            await Customer.findByIdAndDelete(customer._id);
+module.exports = async function (req, res, next) {
+    try {
+        console.log('Ügyfél törlése kezdõdik, ID:', req.params.id);
+        
+        // Ellenõrizzük, hogy van-e aktív kölcsönzése az ügyfélnek
+        const activeRentals = await Rental.find({ customerId: req.params.id, status: 'aktív' });
+        
+        if (activeRentals.length > 0) {
+            console.error('Az ügyfél nem törölhetõ, mert van aktív kölcsönzése');
+            res.locals.error = 'Az ügyfél nem törölhetõ, mert van aktív kölcsönzése!';
             return res.redirect('/customer');
-        } catch (err) {
-            console.error('Hiba az ügyfél törlésekor:', err);
-            return next(err);
         }
-    };
+
+        const deletedCustomer = await Customer.findByIdAndDelete(req.params.id);
+        
+        if (!deletedCustomer) {
+            console.error('Ügyfél nem található:', req.params.id);
+            return res.redirect('/customer');
+        }
+
+        console.log('Ügyfél sikeresen törölve:', req.params.id);
+        return res.redirect('/customer');
+    } catch (err) {
+        console.error('Hiba az ügyfél törlésekor:', err);
+        return next(err);
+    }
 };

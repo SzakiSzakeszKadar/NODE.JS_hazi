@@ -1,19 +1,18 @@
-const Vhs = require('../models/Vhs');
+const Vhs = require('../models/vhs');
 
 /**
  * Az összes VHS kazetta betöltése az adatbázisból
- * @param objRepo
  * @returns {function(*,*,*): *}
  */
-module.exports = function (objRepo) {
-    return async function (req, res, next) {
-        try {
-            const vhsList = await Vhs.find({});
-            res.locals.vhsList = vhsList;
-            return next();
-        } catch (err) {
-            console.error('Hiba a VHS kazetták betöltésekor:', err);
-            return next(err);
-        }
-    };
+module.exports = async function (req, res, next) {
+    console.log('Loading all VHS tapes...');
+    try {
+        const vhsList = await Vhs.find().sort({ title: 1 });
+        console.log('Found VHS tapes:', vhsList.length);
+        res.locals.vhsList = vhsList;
+        return next();
+    } catch (error) {
+        console.error('Hiba a VHS-ek betöltése közben:', error);
+        return next(error);
+    }
 };
