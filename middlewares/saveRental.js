@@ -9,7 +9,7 @@ const Vhs = require('../models/vhs');
  */
 async function saveRental(req, res, next) {
     try {
-        const { customerId, vhsId, returnDate, status } = req.body;
+        const { customerId, vhsId, returnDate } = req.body;
 
         if (!customerId || !vhsId || !returnDate) {
             throw new Error('Minden mezõ kitöltése kötelezõ!');
@@ -33,9 +33,9 @@ async function saveRental(req, res, next) {
             }
 
             rental.returnDate = returnDate;
-            rental.status = status;
+            rental.status = req.body.status || rental.status;
 
-            if (status === 'visszahozott') {
+            if (rental.status === 'visszahozott') {
                 await Vhs.findByIdAndUpdate(vhsId, { available: true });
             }
 
@@ -49,8 +49,11 @@ async function saveRental(req, res, next) {
             const rental = new Rental({
                 customerId,
                 vhsId,
+                rentalDate: new Date(),
                 returnDate,
-                status: 'aktív'
+                status: 'aktív',
+                customerName: customer.name,
+                vhsTitle: vhs.title
             });
 
             await rental.save();

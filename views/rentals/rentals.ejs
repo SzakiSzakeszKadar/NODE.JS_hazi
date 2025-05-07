@@ -31,6 +31,7 @@
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            position: relative;
         }
 
         .loan-item {
@@ -39,6 +40,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             background-color: #f9f9f9;
+            position: relative;
         }
 
         .loan-item p {
@@ -90,18 +92,24 @@
 
         /* Visszavétel gomb */
         .return-button {
-            display: inline-block;
-            margin: 5px 0;
-            padding: 5px 10px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
             background-color: #e74c3c;
             color: white;
             border-radius: 4px;
             text-align: center;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
         .return-button:hover {
             background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         /* Vissza gomb */
@@ -142,20 +150,22 @@
             background-color: #2980b9;
         }
 
-        .szerkesztes {
-            background-color: #f1c40f;
-        }
-
-        .szerkesztes:hover {
-            background-color: #f39c12;
-        }
-
         .torles {
             background-color: #e74c3c;
         }
 
         .torles:hover {
             background-color: #c0392b;
+        }
+
+        /* Státusz változtatás animáció */
+        .status-change {
+            transition: all 0.3s ease;
+        }
+
+        .status-change.visszahozott {
+            background-color: #95a5a6;
+            color: white;
         }
     </style>
 </head>
@@ -164,27 +174,67 @@
 <a href="/rental/addnew" class="new-loan-button">Új kölcsönzés felvétele</a>
 <div class="loan-container">
     <% rentalList.forEach(function(rental) { %>
-    <div class="loan-item">
+    <div class="loan-item" id="rental-<%= rental._id %>">
         <p><strong>Ügyfél neve:</strong> <%= rental.customerName %></p>
         <p><strong>Film címe:</strong> <%= rental.vhsTitle %></p>
         <p><strong>Kölcsönzés dátuma:</strong> <%= new Date(rental.rentalDate).toLocaleDateString('hu-HU') %></p>
         <p><strong>Visszahozás határideje:</strong> <%= new Date(rental.returnDate).toLocaleDateString('hu-HU') %></p>
         <p>
             <strong>Státusz:</strong> 
-            <span class="status <%= rental.status %>">
+            <span class="status <%= rental.status %>" id="status-<%= rental._id %>">
                 <%= rental.status.charAt(0).toUpperCase() + rental.status.slice(1) %>
             </span>
         </p>
         <div class="action-buttons">
             <a href="/rental/detailedview/<%= rental._id %>" class="megtekintes">Megtekintés</a>
             <% if (rental.status === 'aktív') { %>
-                <a href="/rental/edit/<%= rental._id %>" class="szerkesztes">Szerkesztés</a>
                 <a href="/rental/delete/<%= rental._id %>" class="torles" onclick="return confirm('Biztosan törölni szeretnéd a kölcsönzést?')">Törlés</a>
             <% } %>
         </div>
+        <% if (rental.status === 'aktív') { %>
+            <button class="return-button" onclick="returnRental('<%= rental._id %>')">Visszavétel</button>
+        <% } %>
     </div>
     <% }); %>
 </div>
 <a href="/" class="back-button">Vissza</a>
+
+<script>
+function returnRental(rentalId) {
+    if (confirm('Biztosan visszavetted a kölcsönzést?')) {
+        fetch(`/rental/return/${rentalId}`, {
+            method: 'GET'
+        })
+        .then(response => {
+            if (response.ok) {
+                const statusElement = document.getElementById(`status-${rentalId}`);
+                const rentalItem = document.getElementById(`rental-${rentalId}`);
+                const returnButton = rentalItem.querySelector('.return-button');
+                
+                statusElement.textContent = 'Visszahozott';
+                statusElement.className = 'status visszahozott';
+                rentalItem.classList.add('status-change', 'visszahozott');
+                
+                if (returnButton) {
+                    returnButton.remove();
+                }
+                
+                const actionButtons = rentalItem.querySelector('.action-buttons');
+                const deleteButton = actionButtons.querySelector('.torles');
+                if (deleteButton) {
+                    deleteButton.remove();
+                }
+            } else {
+                alert('Hiba történt a visszavétel során!');
+            }
+        })
+        .catch(error => {
+            console.error('Hiba:', error);
+            alert('Hiba történt a visszavétel során!');
+        });
+    }
+    return false;
+}
+</script>
 </body>
 </html>
