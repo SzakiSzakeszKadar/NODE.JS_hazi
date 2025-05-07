@@ -82,15 +82,6 @@
             text-align: center;
         }
 
-        .edit-button {
-            background-color: #f1c40f;
-            color: white;
-        }
-
-        .edit-button:hover {
-            background-color: #f39c12;
-        }
-
         .delete-button {
             background-color: #e74c3c;
             color: white;
@@ -144,7 +135,6 @@
     </div>
     <% if (rental.status === 'aktív') { %>
     <div class="button-group">
-        <a href="/rental/edit/<%= rental._id %>" class="button edit-button">Szerkesztés</a>
         <a href="/rental/delete/<%= rental._id %>" class="button delete-button" onclick="return confirm('Biztosan törölni szeretnéd a kölcsönzést?')">Törlés</a>
     </div>
     <% } %>

@@ -6,6 +6,7 @@ const loadAllRentals = require('./middlewares/loadAllRentals');
 const loadRental = require('./middlewares/loadRental');
 const saveRental = require('./middlewares/saveRental');
 const deleteRental = require('./middlewares/deleteRental');
+const returnRental = require('./middlewares/returnRental');
 const loadAllCustomers = require('./middlewares/loadAllCustomers');
 const loadCustomer = require('./middlewares/loadCustomer');
 const saveCustomer = require('./middlewares/saveCustomer');
@@ -36,6 +37,7 @@ router.get('/rental/edit/:id', loadRental, loadAllCustomers, loadAllVhs, render(
 router.post('/rental/save', saveRental);
 router.post('/rental/save/:id', saveRental);
 router.get('/rental/delete/:id', deleteRental);
+router.get('/rental/return/:id', returnRental);
 
 // Ügyfelek
 router.get('/customer', loadAllCustomers, render('customers/customers'));
