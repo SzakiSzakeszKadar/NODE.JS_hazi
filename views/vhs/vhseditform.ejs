@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VHS Kazetta SzerkesztÈse</title>
+  <title>VHS Kazetta Szerkeszt√©se</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -68,29 +68,29 @@
 </head>
 <body>
   <div class="container">
-    <h1>VHS Kazetta SzerkesztÈse</h1>
+    <h1>VHS Kazetta Szerkeszt√©se</h1>
     <form action="/vhs/save/<%= vhs._id %>" method="POST">
       <div class="form-group">
-        <label for="title">CÌm:</label>
+        <label for="title">C√≠m:</label>
         <input type="text" id="title" name="title" value="<%= vhs.title %>" required>
       </div>
       <div class="form-group">
-        <label for="director">Rendezı:</label>
+        <label for="director">Rendez≈ë:</label>
         <input type="text" id="director" name="director" value="<%= vhs.director %>" required>
       </div>
       <div class="form-group">
-        <label for="releaseYear">Kiad·s Ève:</label>
+        <label for="releaseYear">Kiad√°s √©ve:</label>
         <input type="number" id="releaseYear" name="releaseYear" value="<%= vhs.releaseYear %>" min="1900" max="2100" required>
       </div>
       <div class="form-group">
-        <label for="genre">M˚faj:</label>
+        <label for="genre">M≈±faj:</label>
         <select id="genre" name="genre" required>
-          <option value="">V·lassz m˚fajt</option>
-          <option value="AkciÛ" <%= vhs.genre === 'AkciÛ' ? 'selected' : '' %>>AkciÛ</option>
+          <option value="">V√°lassz m≈±fajt</option>
+          <option value="AkciÔøΩ" <%= vhs.genre === 'AkciÔøΩ' ? 'selected' : '' %>>Akci√≥</option>
           <option value="Kaland" <%= vhs.genre === 'Kaland' ? 'selected' : '' %>>Kaland</option>
-          <option value="Anim·ciÛ" <%= vhs.genre === 'Anim·ciÛ' ? 'selected' : '' %>>Anim·ciÛ</option>
-          <option value="Komedi" <%= vhs.genre === 'Komedi' ? 'selected' : '' %>>Komedi</option>
-          <option value="Dr·ma" <%= vhs.genre === 'Dr·ma' ? 'selected' : '' %>>Dr·ma</option>
+          <option value="AnimÔøΩciÔøΩ" <%= vhs.genre === 'AnimÔøΩciÔøΩ' ? 'selected' : '' %>>Anim√°ci√≥</option>
+          <option value="Komedi" <%= vhs.genre === 'Komedi' ? 'selected' : '' %>>Kom√©dia</option>
+          <option value="DrÔøΩma" <%= vhs.genre === 'DrÔøΩma' ? 'selected' : '' %>>Dr√°ma</option>
           <option value="Fantasy" <%= vhs.genre === 'Fantasy' ? 'selected' : '' %>>Fantasy</option>
           <option value="Horror" <%= vhs.genre === 'Horror' ? 'selected' : '' %>>Horror</option>
           <option value="Misztikus" <%= vhs.genre === 'Misztikus' ? 'selected' : '' %>>Misztikus</option>
@@ -100,15 +100,15 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="available">ElÈrhetı:</label>
+        <label for="available">El√©rhet≈ë:</label>
         <select id="available" name="available" required>
           <option value="true" <%= vhs.available ? 'selected' : '' %>>Igen</option>
           <option value="false" <%= !vhs.available ? 'selected' : '' %>>Nem</option>
         </select>
       </div>
       <div class="button-group">
-        <button type="submit">MentÈs</button>
-        <button type="button" class="cancel" onclick="window.location.href='/vhs'">MÈgse</button>
+        <button type="submit">Ment√©s</button>
+        <button type="button" class="cancel" onclick="window.location.href='/vhs'">M√©gse</button>
       </div>
     </form>
   </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>‹gyfÈl RÈszletes Adatai</title>
+  <title>√úgyf√©l R√©szletes Adatai</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -99,10 +99,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>‹gyfÈl RÈszletes Adatai</h1>
+    <h1>√úgyf√©l R√©szletes Adatai</h1>
     <div class="customer-details">
       <div class="detail-group">
-        <div class="detail-label">NÈv:</div>
+        <div class="detail-label">N√©v:</div>
         <div class="detail-value"><%= customer.name %></div>
       </div>
       <div class="detail-group">
@@ -110,15 +110,15 @@
         <div class="detail-value"><%= customer.email %></div>
       </div>
       <div class="detail-group">
-        <div class="detail-label">Telefonsz·m:</div>
+        <div class="detail-label">Telefonsz√°m:</div>
         <div class="detail-value"><%= customer.phone %></div>
       </div>
       <div class="detail-group">
-        <div class="detail-label">CÌm:</div>
+        <div class="detail-label">C√≠m:</div>
         <div class="detail-value"><%= customer.address %></div>
       </div>
       <div class="detail-group">
-        <div class="detail-label">Tags·g tÌpusa:</div>
+        <div class="detail-label">Tags√°g t√≠pusa:</div>
         <div class="detail-value">
           <span class="membership <%= customer.membershipType %>">
             <%= customer.membershipType %>
@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="detail-group">
-        <div class="detail-label">Csatlakoz·s d·tuma:</div>
+        <div class="detail-label">Csatlakoz√°s d√°tuma:</div>
         <div class="detail-value">
           <%= customer.joinDate.toLocaleDateString('hu-HU', {
             year: 'numeric',
@@ -136,17 +136,17 @@
         </div>
       </div>
       <div class="detail-group">
-        <div class="detail-label">St·tusz:</div>
+        <div class="detail-label">St√°tusz:</div>
         <div class="detail-value">
           <span class="status <%= customer.active ? 'active' : 'inactive' %>">
-            <%= customer.active ? 'AktÌv' : 'InaktÌv' %>
+            <%= customer.active ? 'Akt√≠v' : 'Inakt√≠v' %>
           </span>
         </div>
       </div>
     </div>
     <div class="button-group">
-      <a href="/customer/edit/<%= customer._id %>" class="button edit">SzerkesztÈs</a>
-      <a href="/customer/delete/<%= customer._id %>" class="button delete" onclick="return confirm('Biztosan tˆrˆlni szeretnÈd ezt az ¸gyfelet?')">TˆrlÈs</a>
+      <a href="/customer/edit/<%= customer._id %>" class="button edit">Szerkeszt√©s</a>
+      <a href="/customer/delete/<%= customer._id %>" class="button delete" onclick="return confirm('Biztosan t√∂r√∂lni szeretn√©d ezt az √ºgyfelet?')">T√∂rl√©s</a>
       <a href="/customer" class="button back">Vissza</a>
     </div>
   </div>

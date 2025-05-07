@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kölcsönzés szerkesztése</title>
+    <title>KÃ¶lcsÃ¶nzÃ©s szerkesztÃ©se</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -99,13 +99,13 @@
     </style>
 </head>
 <body>
-    <h1>Kölcsönzés szerkesztése</h1>
+    <h1>KÃ¶lcsÃ¶nzÃ©s szerkesztÃ©se</h1>
     <div class="form-container">
         <form action="/rental/save/<%= rental._id %>" method="POST">
             <div class="form-group">
-                <label for="customerId">Ügyfél:</label>
+                <label for="customerId">ÃœgyfÃ©l:</label>
                 <select id="customerId" name="customerId" required>
-                    <option value="">Válassz ügyfelet...</option>
+                    <option value="">VÃ¡lassz Ã¼gyfelet...</option>
                     <% customers.forEach(function(customer) { %>
                     <option value="<%= customer._id %>" <%= customer._id.toString() === rental.customerId.toString() ? 'selected' : '' %>>
                         <%= customer.name %>
@@ -116,7 +116,7 @@
             <div class="form-group">
                 <label for="vhsId">VHS:</label>
                 <select id="vhsId" name="vhsId" required>
-                    <option value="">Válassz VHS-t...</option>
+                    <option value="">VÃ¡lassz VHS-t...</option>
                     <% vhsList.forEach(function(vhs) { %>
                     <option value="<%= vhs._id %>" <%= vhs._id.toString() === rental.vhsId.toString() ? 'selected' : '' %>>
                         <%= vhs.title %>
@@ -125,23 +125,23 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="returnDate">Visszahozás határideje:</label>
+                <label for="returnDate">VisszahozÃ¡s hatÃ¡rideje:</label>
                 <input type="date" id="returnDate" name="returnDate" value="<%= rental.returnDate.toISOString().split('T')[0] %>" required>
             </div>
             <div class="form-group">
-                <label for="status">Státusz:</label>
+                <label for="status">StÃ¡tusz:</label>
                 <select id="status" name="status" required>
-                    <option value="aktív" <%= rental.status === 'aktív' ? 'selected' : '' %>>Aktív</option>
+                    <option value="aktï¿½v" <%= rental.status === 'aktï¿½v' ? 'selected' : '' %>>AktÃ­v</option>
                     <option value="visszahozott" <%= rental.status === 'visszahozott' ? 'selected' : '' %>>Visszahozott</option>
-                    <option value="lejárt" <%= rental.status === 'lejárt' ? 'selected' : '' %>>Lejárt</option>
+                    <option value="lejï¿½rt" <%= rental.status === 'lejï¿½rt' ? 'selected' : '' %>>LejÃ¡rt</option>
                 </select>
             </div>
             <div class="button-group">
-                <button type="submit" class="button save-button">Mentés</button>
-                <a href="/rental" class="button cancel-button">Mégse</a>
+                <button type="submit" class="button save-button">MentÃ©s</button>
+                <a href="/rental" class="button cancel-button">MÃ©gse</a>
             </div>
         </form>
     </div>
-    <a href="/rental" class="back-button">Vissza a kölcsönzésekhez</a>
+    <a href="/rental" class="back-button">Vissza a kÃ¶lcsÃ¶nzÃ©sekhez</a>
 </body>
-</html> 
+</html>

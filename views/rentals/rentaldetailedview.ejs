@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kölcsönzés részletes nézet</title>
+    <title>KÃ¶lcsÃ¶nzÃ©s rÃ©szletes nÃ©zet</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -51,7 +51,7 @@
             font-weight: bold;
         }
 
-        .status.aktív {
+        .status.aktï¿½v {
             background-color: #2ecc71;
             color: white;
         }
@@ -61,7 +61,7 @@
             color: white;
         }
 
-        .status.lejárt {
+        .status.lejï¿½rt {
             background-color: #e74c3c;
             color: white;
         }
@@ -109,36 +109,36 @@
     </style>
 </head>
 <body>
-<h1>Kölcsönzés részletes nézet</h1>
+<h1>KÃ¶lcsÃ¶nzÃ©s rÃ©szletes nÃ©zet</h1>
 <div class="detail-container">
     <div class="detail-item">
-        <strong>Ügyfél neve:</strong>
+        <strong>ÃœgyfÃ©l neve:</strong>
         <span><%= rental.customerName %></span>
     </div>
     <div class="detail-item">
-        <strong>Film címe:</strong>
+        <strong>Film cÃ­me:</strong>
         <span><%= rental.vhsTitle %></span>
     </div>
     <div class="detail-item">
-        <strong>Kölcsönzés dátuma:</strong>
+        <strong>KÃ¶lcsÃ¶nzÃ©s dÃ¡tuma:</strong>
         <span><%= new Date(rental.rentalDate).toLocaleDateString('hu-HU') %></span>
     </div>
     <div class="detail-item">
-        <strong>Visszahozás határideje:</strong>
+        <strong>VisszahozÃ¡s hatÃ¡rideje:</strong>
         <span><%= new Date(rental.returnDate).toLocaleDateString('hu-HU') %></span>
     </div>
     <div class="detail-item">
-        <strong>Státusz:</strong>
+        <strong>StÃ¡tusz:</strong>
         <span class="status <%= rental.status %>">
             <%= rental.status.charAt(0).toUpperCase() + rental.status.slice(1) %>
         </span>
     </div>
-    <% if (rental.status === 'aktív') { %>
+    <% if (rental.status === 'aktÃ­v') { %>
     <div class="button-group">
-        <a href="/rental/delete/<%= rental._id %>" class="button delete-button" onclick="return confirm('Biztosan törölni szeretnéd a kölcsönzést?')">Törlés</a>
+        <a href="/rental/delete/<%= rental._id %>" class="button delete-button" onclick="return confirm('Biztosan tÃ¶rÃ¶lni szeretnÃ©d a kÃ¶lcsÃ¶nzÃ©st?')">TÃ¶rlÃ©s</a>
     </div>
     <% } %>
 </div>
-<a href="/rental" class="back-button">Vissza a kölcsönzésekhez</a>
+<a href="/rental" class="back-button">Vissza a kÃ¶lcsÃ¶nzÃ©sekhez</a>
 </body>
-</html> 
+</html>
